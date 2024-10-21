@@ -13,6 +13,8 @@ public class Location {
     private int width;
     @JsonProperty("height")
     private int height;
+    @JsonProperty("entities")
+    private ArrayList<Entity> entities;
     @JsonProperty("tileArray")
     private Tile[][] tileArray;
 
@@ -64,5 +66,18 @@ public class Location {
     @Override
     public String toString(){
         return "Location";
+    }
+
+    public ArrayList<Entity> getEntitiesArray() {
+        return entities;
+    }
+
+    public void addEntity(Entity... addingEntities){
+       for (Entity ent : addingEntities)
+           entities.add(ent);
+    }
+
+    public void removeEntity(){
+
     }
 }

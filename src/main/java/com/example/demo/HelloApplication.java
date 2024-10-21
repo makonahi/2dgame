@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.gameobject.Armor;
+import com.example.demo.gameobject.Item;
+import com.example.demo.gameobject.ItemEntity;
+import com.example.demo.procedural.generator.LevelGenerator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

@@ -17,9 +17,11 @@ public class JsonManager {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public <T> void writeJsonObject(String fileName, T obj){
+        if (!fileName.contains(".json"))
+            fileName = fileName + ".json";
         Path path = Path.of(
                 this.getClass().getResource("").getPath().replaceFirst("/", "")  +
-                    obj.toString().toLowerCase() + "/" + fileName);
+                    "assets/" + obj.toString().toLowerCase() + "/" + fileName);
         try {
             objectMapper.writeValue(new File(String.valueOf(path)), obj);
         } catch (IOException e){
@@ -28,10 +30,10 @@ public class JsonManager {
     }
 
     public <T> ArrayList<T> readJsonObjectsOfType(Class<T> clazz){
-        URL _url = getClass().getResource(
-                Arrays.asList(clazz.getName().split("\\.")).getLast().toLowerCase());
         ArrayList<T> listOfAllObjects = new ArrayList<>();
         try {
+            URL _url = getClass().getResource(
+                    "assets/" + clazz.newInstance().toString());
             File dir = new File(_url.toURI());
             for (File fl : dir.listFiles()) {
                 listOfAllObjects.add(objectMapper.readValue(fl, clazz));
@@ -40,19 +42,32 @@ public class JsonManager {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
         return listOfAllObjects;
     }
 
     public <T> T readJsonObject(String fileName, Class<T> clazz) {
-        InputStream is = getClass().getResourceAsStream(
-                Arrays.asList(clazz.getName().split("\\.")).getLast().toLowerCase() +
-                "/" + fileName);
+
+        if (!fileName.contains(".json"))
+            fileName=fileName+"json";
         try {
-            return objectMapper.readValue(is, clazz);
+            URL _url = getClass().getResource(
+                    "assets/" + clazz.newInstance().toString() +
+                            "/" + fileName);
+            return objectMapper.readValue(new File(_url.toURI()), clazz);
         }
         catch (IOException e){
             e.printStackTrace();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }

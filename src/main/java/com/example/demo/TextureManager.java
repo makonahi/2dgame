@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TextureManager {
 
-    private static final String RESOURCE_PATH = "textures/";  // Path to textures in resources
+    private static final String RESOURCE_PATH = "assets/textures/";  // Path to textures in resources
     private final Map<String, Image> textureCache = new HashMap<>();
 
     public Image getTexture(String fileName) {
